@@ -1,0 +1,66 @@
+<h1>{{Title}}</h1>
+
+<div *ngIf="alert" class="alert alert-success" role="alert">
+  <p>{{msgalert}}</p>
+  <hr>
+  <p class="mb-0"></p>
+</div>
+<br />
+<div class="container">
+  <div [hidden]="submitted">
+    <form>
+
+      <div class="form-group" [class.has-error]="email.invalid && email.touched">
+        <label for="email" class="control-label">Email Id*</label>
+        <input type="text" class="form-control" id="email" required email name="email" #email="ngModel"
+          [(ngModel)]="employee.login_email">
+        <span class="help-block" *ngIf="email.errors && email.errors['required'] && email.touched">
+          Email is required
+        </span>
+        <span class="help-block" *ngIf="email.errors && email.errors['email'] && email.touched">
+          Email is invalid
+        </span>
+      </div>
+
+
+      <div class="form-group" [class.has-error]="password.invalid && password.touched">
+        <label for="password">Password*</label>
+        <div class="input-group mb-3">
+          <input [type]="showpwd?'text':'password'" class="form-control" id="password" required
+            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" name="password" #password="ngModel"
+            [(ngModel)]="employee.login_pwd">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button">
+              <i class="fa fa-eye" *ngIf="showpwd" (click)="passwordToggle()"></i>
+              <i class="fa fa-eye-slash" *ngIf="!showpwd" (click)="passwordToggle()"></i>
+            </button>
+          </div>
+
+        </div>
+        <span class="help-block" *ngIf="password.errors && password.errors['required'] && password.touched">
+          Password is required
+        </span>
+        <span class="help-block" *ngIf="password.errors && password.errors['pattern'] && password.touched">
+          Password must contain 8 chracters and atleast 1 number
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Role</label>
+
+        <select name="ddrole" class="form-control" [(ngModel)]="employee.role">
+          <option>--select--</option>
+          <option *ngFor="let role of roledata" [value]="role.role_detail">{{role.role_detail}} </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <input type="file" (change)="onFileSelect($event)">
+       
+      </div>
+
+
+      <button class="btn btn-success" (click)="OnBtnClick()">{{ addButtonText }}</button>
+    </form>
+  </div>
+</div>

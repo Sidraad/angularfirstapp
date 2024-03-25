@@ -1,0 +1,52 @@
+<!-- Include jQuery and DataTables -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<!-- Your component script -->
+<!--<script src="./script.js"></script>-->
+
+
+<div class="container p-5" >
+    <table>
+        <tr>
+            <td>
+                <button type="button" class="btn btn-primary btn-sm" routerLink="add">+</button>
+            </td>
+            <td>
+                <input class="form-control" type="text" placeholder="search.." [(ngModel)]="SearchText">
+            </td>
+        </tr>
+    </table>
+    
+    <div class="card">
+        <div class="card-body">
+
+            <table id="example" class="table table-hover table-stripped">
+                <thead>
+                    <tr>
+                        <th style="display: none;">ID</th>
+                        <th>E-mail</th>
+                        <th>Password</th>
+                        <th>Role</th>
+                        <th colspan="3">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of data | paginate: {itemsPerPage: 10,currentPage:p} |search: SearchText">
+                        <td style="display: none;">{{item.login_Id}}</td>
+                        <td>{{ item.login_email }}</td>
+                        <td>{{ item.login_pwd }}</td>
+                        <td>{{ item.role }}</td>
+                        <td> <button class="btn btn-success btn-sm rounded-0" (click)="EditDetail(item.login_Id)" >Edit</button></td>
+                        <td><button class="btn btn-danger btn-sm rounded-0" (click)="DelDetail(item.login_Id)">Delete</button></td>
+                        <td><button class="btn btn-primary btn-sm rounded-0" (click)="GenPDF()">Generate PDF</button></td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+           <pagination-controls (pageChange)="p=$event"></pagination-controls>
+
+        </div>
+    </div>
+</div>
+
